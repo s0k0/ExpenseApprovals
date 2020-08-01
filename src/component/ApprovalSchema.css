@@ -1,0 +1,7 @@
+.approval-schema {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 5% 20%;
+  height: 100vh;
+}
