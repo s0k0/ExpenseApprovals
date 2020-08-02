@@ -26,12 +26,18 @@
   padding: 12px 0;
 }
 
-.primary-action, .secondary-action {
+.primary-action, .secondary-action, .close-action {
   padding: 6px 12px;
   margin: 0 6px;
   border-radius: 2px;
   cursor: pointer;
 }
+
+.secondary-action, .close-action {
+  background: none;
+  color: grey;
+  font-weight: bolder;
+}  
 
 .primary-action {
   background: #5d21d2;
@@ -39,12 +45,13 @@
   color: white;
 } 
 
-.secondary-action, .close-action {
-  border: none;
-  background: none;
-  color: grey;
-  font-weight: bolder;
-}  
+.secondary-action {
+  border: 1px solid grey;
+}
+ .close-action {
+   border: none;
+ }
+ 
 
 .total-users {
   font-size: x-small;
@@ -60,12 +67,15 @@
   cursor: pointer;
 }
 
-.approval-step, .approval-create {
+.approval-review, .approval-create, .error {
   border-radius: 2px;
   padding: 12px;
   margin: 12px 0;
 } 
-.approval-step {
+
+.approval-review {
+  display: flex;
+  justify-content: space-between;
   border: 1px solid grey;
 }
 
@@ -79,6 +89,12 @@
 .approval-create > .edit-field {
   padding: 6px;
 }
+
+.error {
+  color: red;
+  border: 1px solid red;
+  width: 100%;
+} 
 
 
 @media screen and (max-width: 768px) {

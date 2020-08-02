@@ -8,12 +8,9 @@ class ApprovalSchema extends React.Component {
         teams: [],
         users: [],
         selectedTeam : {},
-        currentStep: {}
+        currentStep: {},
+        error: { status: false, message: ''}
       }
-      this.handleTeamChange = this.handleTeamChange.bind(this)
-      this.handleApprovalChange = this.handleApprovalChange.bind(this)
-      this.editApproval = this.editApproval.bind(this)
-      this.clearEdits = this.clearEdits.bind(this)
   }
 
   async componentDidMount() {
@@ -33,29 +30,49 @@ class ApprovalSchema extends React.Component {
     this.setState({ selectedTeam: this.state.teams[0]})
   };
 
-  handleTeamChange (team) {
+  selectTeam (team) {
     this.setState({ selectedTeam: team})
   }
 
   handleApprovalChange () {
+    if(!this.state.currentStep.id) {
+      this.clearEdits()
+      return
+    }
     const team = this.state.selectedTeam
-    const update = { ...team, approvals: team.approvals.concat([this.state.currentStep])}
-    const newTeams = this.state.teams.filter( _ => _.id !== team.id).concat(update)
-    this.setState({ teams: newTeams})
+    const updatedTeam = { 
+      ...team, 
+      approvals: team.approvals.filter( _ => _.id !== this.state.currentStep.id).concat([this.state.currentStep])
+    }
+    this.setState({ teams: this.state.teams.filter( _ => _.id !== team.id).concat(updatedTeam)})
     this.clearEdits()
   }
 
-  addApproval (step) {
+  selectApproval (step) {
     this.setState({ currentStep: step})
   }
 
+  deleteApproval (step) {
+    const team = this.state.selectedTeam
+    const updatedTeam = { 
+      ...team,
+      approvals: team.approvals.filter( _ => _.id !== step.id)
+    }
+    this.setState({ teams: this.state.teams.filter( _ => _.id !== team.id).concat(updatedTeam)})
+    this.clearEdits()
+  }
+
   editApproval (value, attribute) {
+    //TODO: add minimum validation (lower < upper, unique aprover, non-intersecting boundaries)
+    if(value < 0) {
+      return
+    }
     const updatedStep = { ...this.state.currentStep, [attribute]: value  }
     this.setState({ currentStep: updatedStep})
   }
 
   clearEdits () {
-    this.handleTeamChange({})
+    this.selectTeam({})
     this.setState({ currentStep: {}})
   }
 
@@ -66,8 +83,12 @@ class ApprovalSchema extends React.Component {
   renderApproval (step) {
     const approver = this.findUserbyId(step.approver)
     return (
-      <div className="approval-step" key={step.id}>
-        {`${approver.first_name} ${approver.last_name}`}: {step.lower} - {step.upper} €
+      <div className="approval-review" key={step.id}>
+        <span>
+        {`${approver.first_name} ${approver.last_name}`}: {step.lower} - {step.upper} € 
+        </span>
+        <button className="primary-action" onClick={() => { this.selectApproval(step) }}>Edit</button>
+        <button className="secondary-action" onClick={() => { this.deleteApproval(step) }}>Delete</button>
       </div>
     )
   }
@@ -75,32 +96,35 @@ class ApprovalSchema extends React.Component {
   renderEditApproval () {
     const step = this.state.currentStep
     return (
-      <div className="approval-create">
-          <span className="edit-field">
-            Approver: <select
-              value={step.approver}  
-              onChange={(e) => this.editApproval(e.target.value, 'approver')}
-            >
-              {this.state.users.map( _ => <option key={_.id} value={_.id}>{`${_.first_name} ${_.last_name}`}</option>)}
-            </select>
-          </span>
-          <span className="edit-field">
-            From : <input 
-              type="number"
-              min="0"  
-              value={step.lower}  
-              onChange={(e) => this.editApproval(e.target.value, 'lower')}/> €
-          </span>
-          <span className="edit-field">
-           To:
-          <input 
-            type="number" 
-            min="0"
-            value={step.upper}  
-            onChange={(e) => this.editApproval(e.target.value, 'upper')}/>
-          €
-          </span>
-      </div>
+      <React.Fragment>
+        <div className="approval-create">
+            <span className="edit-field">
+              Approver: <select
+                value={step.approver}  
+                onChange={(e) => this.editApproval(e.target.value, 'approver')}
+              >
+                {this.state.users.map( _ => <option key={_.id} value={_.id}>{`${_.first_name} ${_.last_name}`}</option>)}
+              </select>
+            </span>
+            <span className="edit-field">
+              From : <input 
+                type="number"
+                min="0"  
+                value={step.lower}  
+                onChange={(e) => this.editApproval(e.target.value, 'lower')}/> €
+            </span>
+            <span className="edit-field">
+            To:
+            <input 
+              type="number" 
+              min={step.lower}
+              value={step.upper}  
+              onChange={(e) => this.editApproval(e.target.value, 'upper')}/>
+            €
+            </span>
+        </div>
+        {this.state.error.status === true ? <div className="error">{this.state.error.message}</div> : null}
+      </React.Fragment>
     )
   }
 
@@ -117,7 +141,7 @@ class ApprovalSchema extends React.Component {
         {team.approvals.map( _ => this.renderApproval(_))}
         {this.state.currentStep.id  ? 
           this.renderEditApproval(newStep) :  
-          <div className="add-step" onClick={() => { this.addApproval(newStep)}}>
+          <div className="add-step" onClick={() => { this.selectApproval(newStep)}}>
                 + Add a threshold
           </div>
         }
@@ -130,7 +154,7 @@ class ApprovalSchema extends React.Component {
       <React.Fragment>
           <div className="title">
             Set up approvers 
-            <button className="close-action" onClick={() => this.handleTeamChange({})}>X</button>
+            <button className="close-action" onClick={() => this.selectTeam({})}>X</button>
           </div>
           <div>Who can approve request of the team {team.name}?</div>
           {this.renderApprovalStepList()}
@@ -149,7 +173,7 @@ class ApprovalSchema extends React.Component {
       <React.Fragment>
          <div className="title"> 
             Team {team.name} 
-             <button className="primary-action" onClick={() => this.handleTeamChange(team)}>Edit</button>
+             <button className="primary-action" onClick={() => this.selectTeam(team)}>Edit</button>
          </div>
          <div>
             Users: { team.users.length > 3 ? <span className="total-users">(3 out of {team.users.length})</span> : null} 
