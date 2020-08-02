@@ -9,7 +9,7 @@ function App() {
     <div className="app">
       <header className="app-header"><img src={logo} className="app-logo" alt="logo" /></header>
       <h1 className="app-greeting">Welcome to Spendesk</h1>
-        <ApprovalSchema />
+      <ApprovalSchema />
     </div>
   );
 }

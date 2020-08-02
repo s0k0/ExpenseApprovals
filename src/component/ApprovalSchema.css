@@ -20,7 +20,7 @@
   font-size: larger;
   font-weight: bolder;
   padding-bottom: 12px;
-} 
+}
 
 .controls {
   padding: 12px 0;
@@ -37,31 +37,31 @@
   background: none;
   color: grey;
   font-weight: bolder;
-}  
+}
 
 .primary-action {
   background: #5d21d2;
   border: 1px solid #5d21d2;
   color: white;
-} 
+}
 
 .secondary-action {
   border: 1px solid grey;
 }
- .close-action {
-   border: none;
- }
- 
+
+.close-action {
+  border: none;
+}
 
 .total-users {
   font-size: x-small;
   color: grey;
-} 
+}
 
 .add-step {
   color: grey;
   border: 1px dashed grey;
-  margin: 12px 0 ;
+  margin: 12px 0;
   padding: 12px;
   text-align: center;
   cursor: pointer;
@@ -71,7 +71,7 @@
   border-radius: 2px;
   padding: 12px;
   margin: 12px 0;
-} 
+}
 
 .approval-review {
   display: flex;
@@ -87,7 +87,7 @@
   align-items: flex-start;
 }
 
-.approval-create > .edit-field {
+.approval-create>.edit-field {
   padding: 6px;
 }
 
@@ -95,12 +95,11 @@
   color: red;
   border: 1px solid red;
   width: 100%;
-} 
-
+}
 
 @media screen and (max-width: 768px) {
   .approval-manager {
-      padding: 0 5%;
+    padding: 0 5%;
   }
   .title, .approval-review {
     flex-wrap: wrap;
