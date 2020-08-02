@@ -1,7 +1,48 @@
-.approval-schema {
+.approval-manager {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 5% 20%;
-  height: 100vh;
+  padding: 0% 20%;
+  height: 100%;
 }
+
+.team {
+  border: 1px solid lightgray;
+  margin: 12px 0;
+  padding: 12px;
+}
+
+.team-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: larger;
+  font-weight: bolder;
+} 
+
+.controls {
+  padding: 12px 0;
+}
+
+.primary-action, .secondary-action {
+  padding: 6px 12px;
+  margin: 0 6px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.primary-action {
+  background: #5d21d2;
+  border: 1px solid #5d21d2;
+  color: white;
+} 
+
+.secondary-action {
+  border: none;
+  background: none;
+  border: 1px solid grey;
+  color: grey;
+}  
+
+.total-users {
+  font-size: x-small;
+  color: grey;
+} 
