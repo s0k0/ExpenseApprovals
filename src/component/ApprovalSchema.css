@@ -8,15 +8,18 @@
 
 .team {
   border: 1px solid lightgray;
+  border-radius: 6px;
   margin: 12px 0;
   padding: 12px;
+  background: white;
 }
 
-.team-title {
+.title {
   display: flex;
   justify-content: space-between;
   font-size: larger;
   font-weight: bolder;
+  padding-bottom: 12px;
 } 
 
 .controls {
@@ -29,20 +32,66 @@
   border-radius: 2px;
   cursor: pointer;
 }
+
 .primary-action {
   background: #5d21d2;
   border: 1px solid #5d21d2;
   color: white;
 } 
 
-.secondary-action {
+.secondary-action, .close-action {
   border: none;
   background: none;
-  border: 1px solid grey;
   color: grey;
+  font-weight: bolder;
 }  
 
 .total-users {
   font-size: x-small;
   color: grey;
 } 
+
+.add-step {
+  color: grey;
+  border: 1px dashed grey;
+  margin: 12px 0 ;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.approval-step, .approval-create {
+  border-radius: 2px;
+  padding: 12px;
+  margin: 12px 0;
+} 
+.approval-step {
+  border: 1px solid grey;
+}
+
+.approval-create {
+  border: 1px solid #5d21d2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.approval-create > .edit-field {
+  padding: 6px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .approval-manager {
+      padding: 0 5%;
+  }
+  .primary-action, .secondary-action {
+    width: 100%;
+    margin: 12px 0;
+    padding: 12px 0;
+  }
+
+  .title {
+    flex-wrap: wrap;
+  }
+}
