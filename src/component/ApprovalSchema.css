@@ -76,6 +76,7 @@
 .approval-review {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border: 1px solid grey;
 }
 
@@ -101,13 +102,12 @@
   .approval-manager {
       padding: 0 5%;
   }
+  .title, .approval-review {
+    flex-wrap: wrap;
+  }
   .primary-action, .secondary-action {
     width: 100%;
     margin: 12px 0;
     padding: 12px 0;
-  }
-
-  .title {
-    flex-wrap: wrap;
   }
 }
