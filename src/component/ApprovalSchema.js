@@ -93,16 +93,19 @@ class ApprovalSchema extends React.Component {
     const approver = this.findUserbyId(step.approver)
     return (
       <div className="approval-review" key={step.id}>
-        <span>
+        <span className="details">
           {`${approver.first_name} ${approver.last_name}`}: {step.lower} - {step.upper} €
         </span>
-        <button className="primary-action" onClick={() => { this.selectApproval(step) }}>Edit</button>
-        <button className="secondary-action" onClick={() => { this.deleteApproval(step) }}>Delete</button>
+        <span className="controls">
+          <button className="secondary-action" onClick={() => { this.selectApproval(step) }}>Edit</button>
+          <button className="tertiary-action" onClick={() => { this.deleteApproval(step) }}>Delete</button>
+        </span>
       </div>
     )
   }
 
   renderEditApproval() {
+    //TODO: allow upper or lower bound to be unlimited
     const step = this.state.currentStep
     const unavailableApprover = this.state.selectedTeam.approvals.filter(_ => _.id === step.id).map(_ => _.approver)
     const options = this.state.users.filter(_ => !unavailableApprover.includes(_.id))
@@ -176,7 +179,7 @@ class ApprovalSchema extends React.Component {
         <div>Who can approve request of the team {team.name}?</div>
         {this.renderApprovalStepList()}
         <div className="controls">
-          <button className="secondary-action" onClick={() => this.clearEdits()}>Cancel</button>
+          <button className="tertiary-action" onClick={() => this.clearEdits()}>Cancel</button>
           <button className="primary-action" onClick={() => this.saveEdits()}>Save Approval Flow</button>
         </div>
       </React.Fragment>

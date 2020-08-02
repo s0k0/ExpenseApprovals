@@ -27,42 +27,32 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Open Discussion
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Bugs and known issue
+Currently, there is few validation about user input. There are implicit restrictions however, like on the approver dropdown, which filters the existing approvers on a team from the options thus not allowing you to select twice the same approver within any team. In general validation I would like to add since I feel this is standard and valuable to the user:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Budget Boundaries
+* intersecting upper and lower limits within an approval possible
+* intersecting limits to other approvers in the same team possible
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Edit Mode
+* when selecting an approval step, the edit mode is not rendered in place but after approval list 
+* drop down for approver candidates does not provide default select for the current approver
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Topics left to do
+Some things are not strictly broken, but increase friction when interacting with the app or are below what I would recommend for the use case.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Budget Boundaries
+* should be unlimted for upper or lower threshold to simplfy
+* highlight gaps in the existing approval schema limits (e.g. 500- 1000 € not covered yet)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Edit Mode
+* when deleting an approval step, confirmation should be requested from user
+* improve responsiveness for small screens in general
+* show how often an approver is already scheduled across teams
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+3. General
+*  data should be fetched in the main app component, not in the ApprovalSchema component
+* more test for ApprovalSchema component
